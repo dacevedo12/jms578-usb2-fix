@@ -2,7 +2,7 @@
 name = "jms578-usb2-fix"
 version = "0.1.0"
 edition = "2024"
-rust-version = "1.85"
+rust-version = "1.88"
 description = "Fix cheap JMicron JMS578 USB-to-SATA adapters that fail over USB 3 (not recognized on Mac, disconnects, works only through a hub) by safely switching them to USB 2.0-only mode."
 license = "MIT"
 readme = "README.md"

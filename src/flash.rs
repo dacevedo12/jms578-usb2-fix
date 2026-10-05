@@ -118,7 +118,7 @@ impl<B: SpiBus> SpiFlash<B> {
     }
 
     pub fn erase_sector(&mut self, address: usize) -> Result<()> {
-        assert!(address % SECTOR_SIZE == 0 && address < self.chip.size);
+        assert!(address.is_multiple_of(SECTOR_SIZE) && address < self.chip.size);
         self.write_enable()?;
         self.bus.transfer(&command(0x20, address), 0)?;
         self.wait_ready()

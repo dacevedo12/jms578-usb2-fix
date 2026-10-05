@@ -23,13 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-        with:
-          components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
-      - name: Format
-        run: cargo fmt --check
-      - name: Clippy
-        run: cargo clippy --all-targets --locked -- -D warnings
       - name: Tests
         run: cargo test --locked
       - name: End-to-end rehearsal (--simulate)
@@ -37,12 +31,29 @@ jobs:
           printf '\ny\nyes\n\n' | cargo run --locked -- --simulate --backup-dir "$RUNNER_TEMP/backups"
           printf 'y\n' | cargo run --locked -- --simulate --backup-dir "$RUNNER_TEMP/backups-2" status
 
+  lint:
+    name: Format and lint (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      # Pinned so a new Clippy release cannot fail the build on unchanged code; bump deliberately.
+      - uses: dtolnay/rust-toolchain@1.99
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets --locked -- -D warnings
+
   msrv:
-    name: Minimum supported Rust (1.85)
+    name: Minimum supported Rust (1.88)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.85
+      - uses: dtolnay/rust-toolchain@1.88
       - uses: Swatinem/rust-cache@v2
       - run: cargo check --all-targets --locked
 

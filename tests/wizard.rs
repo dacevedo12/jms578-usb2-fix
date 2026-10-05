@@ -76,7 +76,7 @@ fn declining_to_eject_changes_nothing() {
         .unwrap();
     assert_eq!(outcome, Outcome::Cancelled);
     assert_eq!(hw.sim.flash_contents(), original);
-    assert!(backups(dir.path()).is_empty());
+    assert_eq!(backups(dir.path()), Vec::<PathBuf>::new());
 }
 
 #[test]
@@ -207,7 +207,7 @@ fn direct_usb3_link_stops_before_touching_anything() {
     assert_eq!(outcome, Outcome::Cancelled);
     assert!(ui.output().contains("The adapter is on a USB 3 link"));
     assert_eq!(hw.sim.flash_contents(), original);
-    assert!(backups(dir.path()).is_empty());
+    assert_eq!(backups(dir.path()), Vec::<PathBuf>::new());
 }
 
 #[test]

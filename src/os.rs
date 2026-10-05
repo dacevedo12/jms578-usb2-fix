@@ -72,10 +72,10 @@ mod platform {
 
     fn whole_disks(node: &Value, out: &mut Vec<String>) {
         let Some(dict) = node.as_dictionary() else { return };
-        if dict.get("Whole").and_then(Value::as_boolean) == Some(true) {
-            if let Some(name) = dict.get("BSD Name").and_then(Value::as_string) {
-                out.push(name.to_string());
-            }
+        if dict.get("Whole").and_then(Value::as_boolean) == Some(true)
+            && let Some(name) = dict.get("BSD Name").and_then(Value::as_string)
+        {
+            out.push(name.to_string());
         }
         if let Some(children) = dict.get("IORegistryEntryChildren").and_then(Value::as_array) {
             for child in children {
@@ -84,6 +84,7 @@ mod platform {
         }
     }
 
+    #[must_use]
     pub fn disks_for_usb_device(port: &str, _vid: u16, _pid: u16) -> Vec<String> {
         let Some(location) = location_id(port) else {
             return Vec::new();
@@ -109,6 +110,7 @@ mod platform {
     }
 
     /// Mount points of the disk's partitions and of APFS volumes stored on it.
+    #[must_use]
     pub fn mounted_volumes(disk: &str) -> Vec<String> {
         let Ok(xml) = run("diskutil", &["list", "-plist"]) else {
             return Vec::new();
@@ -177,6 +179,7 @@ mod platform {
     use crate::error::{Error, Result};
     use std::path::Path;
 
+    #[must_use]
     pub fn disks_for_usb_device(port: &str, _vid: u16, _pid: u16) -> Vec<String> {
         let Ok(usb) = std::fs::canonicalize(Path::new("/sys/bus/usb/devices").join(port)) else {
             return Vec::new();
@@ -191,6 +194,7 @@ mod platform {
             .collect()
     }
 
+    #[must_use]
     pub fn mounted_volumes(disk: &str) -> Vec<String> {
         let device = format!("/dev/{disk}");
         std::fs::read_to_string("/proc/mounts")

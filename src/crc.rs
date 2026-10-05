@@ -27,9 +27,9 @@ static TABLE: [u32; 256] = table();
 /// If the length is not a multiple of 4.
 #[must_use]
 pub fn checksum(bytes: &[u8]) -> u32 {
-    assert!(bytes.len() % 4 == 0, "length must be a multiple of 4");
+    assert!(bytes.len().is_multiple_of(4), "length must be a multiple of 4");
     let mut crc = 0xFFFF_FFFFu32;
-    for word in bytes.chunks_exact(4) {
+    for word in bytes.as_chunks::<4>().0 {
         for &byte in word.iter().rev() {
             crc = (crc << 8) ^ TABLE[((crc >> 24) ^ u32::from(byte.reverse_bits())) as usize];
         }

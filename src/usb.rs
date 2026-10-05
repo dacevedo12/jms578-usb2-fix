@@ -233,15 +233,15 @@ impl UsbTransport {
             } else if !data_out.is_empty() {
                 self.handle.write_bulk(self.ep_out, data_out, TIMEOUT)?;
             }
-            let mut csw = [0u8; bot::CSW_LEN];
-            let n = match self.handle.read_bulk(self.ep_in, &mut csw, TIMEOUT) {
+            let mut status_wrapper = [0u8; bot::CSW_LEN];
+            let n = match self.handle.read_bulk(self.ep_in, &mut status_wrapper, TIMEOUT) {
                 Err(rusb::Error::Pipe) => {
                     self.handle.clear_halt(self.ep_in)?;
-                    self.handle.read_bulk(self.ep_in, &mut csw, TIMEOUT)?
+                    self.handle.read_bulk(self.ep_in, &mut status_wrapper, TIMEOUT)?
                 }
                 other => other?,
             };
-            let status = bot::parse_status(&csw[..n], tag)?;
+            let status = bot::parse_status(&status_wrapper[..n], tag)?;
             if status.status != 0 {
                 return Err(Error::CommandFailed {
                     opcode: cdb[0],
