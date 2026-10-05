@@ -14,13 +14,15 @@ Sounds like yours?
 
 ## Fix it
 
-1. **Install** (needs [Rust](https://rustup.rs)):
+1. **Download** the latest release for your computer (macOS or Linux):
 
    ```sh
-   cargo install --git https://github.com/dacevedo12/jms578-usb2-fix
+   curl -fsSL "https://github.com/dacevedo12/jms578-usb2-fix/releases/latest/download/jms578-usb2-fix-$(uname -m | sed s/arm64/aarch64/)-$(uname -s | sed 's/Darwin/apple-darwin/;s/Linux/unknown-linux-gnu/').tar.gz" | tar xz
+   cd jms578-usb2-fix
    ```
 
-   Or download a binary from [Releases](https://github.com/dacevedo12/jms578-usb2-fix/releases).
+   Or pick a file from [Releases](https://github.com/dacevedo12/jms578-usb2-fix/releases), or
+   [build from source](#build-from-source).
 
 2. **Connect the adapter through a USB hub**, with its drive attached. Any USB 3 hub, dock or multiport adapter works,
    as does a USB 2.0 port.
@@ -28,14 +30,14 @@ Sounds like yours?
 3. **Run it and follow the prompts:**
 
    ```sh
-   sudo jms578-usb2-fix
+   sudo ./jms578-usb2-fix
    ```
 
    At the end it asks you to plug the adapter in directly, and confirms that your drive is back.
 
-**To undo:** `sudo jms578-usb2-fix restore`
+**To undo:** `sudo ./jms578-usb2-fix restore`
 
-Want to see the steps first? `jms578-usb2-fix --simulate` rehearses everything with a simulated adapter and doesn't
+Want to see the steps first? `./jms578-usb2-fix --simulate` rehearses everything with a simulated adapter and doesn't
 touch your hardware.
 
 **Trade-off:** the adapter then runs at USB 2.0 speed (about 35-40 MB/s) everywhere.
@@ -99,8 +101,21 @@ comes back automatically afterwards.
 | `--backup-dir DIR` | Use another backup folder. |
 | `--simulate` | Run any command against a simulated adapter. |
 
-Release binaries come with `.sha256` files to verify them. The macOS binaries are not notarized by Apple, so if you
-downloaded one with a browser, run `xattr -d com.apple.quarantine jms578-usb2-fix` before using it.
+Commands in this section assume the tool is on your `PATH`; from the downloaded folder, use `./jms578-usb2-fix`.
+
+### Build from source
+
+With [Rust](https://rustup.rs) installed:
+
+```sh
+cargo install --git https://github.com/dacevedo12/jms578-usb2-fix
+```
+
+### About the release binaries
+
+Each archive has a `.sha256` file to verify it. The macOS binaries are not notarized by Apple: downloading with
+`curl` as shown above works as is, but if you download one with a browser, run
+`xattr -d com.apple.quarantine jms578-usb2-fix` before using it.
 
 ### FAQ
 

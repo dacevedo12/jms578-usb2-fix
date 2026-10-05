@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1
+
+- Release archives have stable names (`jms578-usb2-fix-<target>.tar.gz`), so the README's download command always
+  fetches the latest version.
+
 ## 0.1.0
 
 - Guided `fix`: validate the adapter, back up, enable USB 2.0-only mode, verify after replug.

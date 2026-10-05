@@ -28,11 +28,12 @@ jobs:
       - run: cargo build --release --locked --target ${{ matrix.target }}
       - name: Package
         shell: bash
+        # Stable names (no version) so README links to releases/latest/download/ always work.
         run: |
-          name=jms578-usb2-fix-${GITHUB_REF_NAME}-${{ matrix.target }}
-          mkdir "$name"
-          cp target/${{ matrix.target }}/release/jms578-usb2-fix README.md LICENSE "$name/"
-          tar czf "$name.tar.gz" "$name"
+          name=jms578-usb2-fix-${{ matrix.target }}
+          mkdir jms578-usb2-fix
+          cp target/${{ matrix.target }}/release/jms578-usb2-fix README.md LICENSE jms578-usb2-fix/
+          tar czf "$name.tar.gz" jms578-usb2-fix
           shasum -a 256 "$name.tar.gz" > "$name.tar.gz.sha256"
       - uses: actions/upload-artifact@v4
         with:
