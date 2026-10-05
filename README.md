@@ -51,7 +51,7 @@ touch your hardware.
 The chip is fine. The **USB 3 wiring is cheap**: the SuperSpeed pairs are loose wires with no shield or ground. USB 3
 runs at 5 Gb/s and can't tolerate that, while USB 2 uses separate wires that cope fine.
 
-![Inside a cheap JMS578 adapter: USB 3 pairs as loose wires, ground pad left empty](docs/adapter-pcb.svg)
+![Both sides of a cheap JMS578 adapter: loose USB 3 wires with an empty ground pad on the chip side, separate USB 2 wires on the back](docs/adapter-pcb.svg)
 
 A hub hides the problem, because it re-drives the signal with its own clock:
 
