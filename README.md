@@ -47,7 +47,9 @@ need USB 3 speed, the real fix is a better adapter or rewiring the cable. You ca
    cargo install --git https://github.com/dacevedo12/jms578-usb2-fix
    ```
 
-   Or download a binary from [Releases](https://github.com/dacevedo12/jms578-usb2-fix/releases).
+   Or download a binary from [Releases](https://github.com/dacevedo12/jms578-usb2-fix/releases) and check it
+   against its `.sha256` file. The macOS binaries are not notarized by Apple, so if you downloaded one with a
+   browser, clear the quarantine flag before running it: `xattr -d com.apple.quarantine jms578-usb2-fix`.
 
 2. Optional: rehearse the whole procedure with a simulated adapter. Nothing touches your hardware:
 
