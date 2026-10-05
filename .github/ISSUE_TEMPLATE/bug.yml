@@ -1,0 +1,19 @@
+name: Bug
+description: Something in the tool does not work as described.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: Include the full output of the command you ran.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version and OS
+      description: Output of `jms578-usb2-fix --version`, plus your OS.
+    validations:
+      required: true

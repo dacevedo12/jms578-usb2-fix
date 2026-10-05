@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" width="960" height="600" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Why cheap JMS578 USB-SATA adapters fail over USB 3</title>
+  <rect width="960" height="600" fill="#ffffff"/>
+
+  <text x="24" y="38" font-size="22" font-weight="700" fill="#111">Inside a typical cheap JMS578 USB-SATA adapter</text>
+  <text x="24" y="62" font-size="14" fill="#555">Board side shown (component side). The chip is fine; the USB 3 wiring to the cable is not.</text>
+
+  <!-- SATA connector -->
+  <rect x="60" y="92" width="470" height="34" rx="4" fill="#2f5fd0"/>
+  <text x="295" y="114" font-size="13" fill="#fff" text-anchor="middle" font-weight="600">SATA connector (to the drive)</text>
+
+  <!-- PCB -->
+  <rect x="60" y="126" width="470" height="250" rx="6" fill="#1f7a3d"/>
+  <rect x="60" y="126" width="470" height="250" rx="6" fill="none" stroke="#155c2d" stroke-width="2"/>
+
+  <!-- JMS578 chip -->
+  <rect x="300" y="160" width="120" height="120" rx="6" fill="#222"/>
+  <text x="360" y="212" font-size="15" fill="#eee" text-anchor="middle" font-weight="700">JMS578</text>
+  <text x="360" y="232" font-size="11" fill="#bbb" text-anchor="middle">USB 3 ⇄ SATA bridge</text>
+  <text x="360" y="248" font-size="11" fill="#bbb" text-anchor="middle">(8051 + USB 2/3 PHYs)</text>
+
+  <!-- SPI flash -->
+  <rect x="110" y="175" width="90" height="60" rx="4" fill="#222"/>
+  <text x="155" y="200" font-size="12" fill="#eee" text-anchor="middle" font-weight="700">SPI flash</text>
+  <text x="155" y="217" font-size="10" fill="#bbb" text-anchor="middle">firmware +</text>
+  <text x="155" y="229" font-size="10" fill="#bbb" text-anchor="middle">config (NVRAM)</text>
+  <line x1="200" y1="205" x2="300" y2="205" stroke="#c9b26b" stroke-width="2"/>
+
+  <!-- crystal -->
+  <rect x="450" y="290" width="54" height="40" rx="4" fill="#888"/>
+  <text x="477" y="314" font-size="10" fill="#111" text-anchor="middle">30 MHz</text>
+
+  <!-- traces chip -> CN2 (the drain pad has no trace) -->
+  <path d="M330 280 V300 H180 V350" stroke="#c9b26b" stroke-width="2" fill="none"/>
+  <path d="M345 280 V312 H222 V350" stroke="#c9b26b" stroke-width="2" fill="none"/>
+  <path d="M375 280 V318 H306 V350" stroke="#c9b26b" stroke-width="2" fill="none"/>
+  <path d="M390 280 V330 H348 V350" stroke="#c9b26b" stroke-width="2" fill="none"/>
+
+  <!-- CN2 pads (USB 3 SuperSpeed) -->
+  <text x="140" y="345" font-size="12" fill="#e8f5e9" font-weight="700">CN2</text>
+  <g>
+    <rect x="166" y="350" width="28" height="22" rx="3" fill="#d9d9d9"/>
+    <rect x="208" y="350" width="28" height="22" rx="3" fill="#d9d9d9"/>
+    <rect x="250" y="350" width="28" height="22" rx="3" fill="#d9d9d9"/>
+    <rect x="292" y="350" width="28" height="22" rx="3" fill="#d9d9d9"/>
+    <rect x="334" y="350" width="28" height="22" rx="3" fill="#d9d9d9"/>
+  </g>
+
+  <!-- loose wires to the cable -->
+  <path d="M180 372 C180 430 200 450 230 520" stroke="#1e66f5" stroke-width="4" fill="none"/>
+  <path d="M222 372 C222 430 240 450 262 520" stroke="#f2c200" stroke-width="4" fill="none"/>
+  <path d="M306 372 C306 430 300 450 296 520" stroke="#8a3ffc" stroke-width="4" fill="none"/>
+  <path d="M348 372 C348 430 340 450 330 520" stroke="#ff7f11" stroke-width="4" fill="none"/>
+
+  <!-- missing drain -->
+  <line x1="254" y1="354" x2="274" y2="368" stroke="#d00000" stroke-width="3"/>
+  <line x1="274" y1="354" x2="254" y2="368" stroke="#d00000" stroke-width="3"/>
+
+  <!-- cable -->
+  <rect x="200" y="520" width="160" height="40" rx="8" fill="#444"/>
+  <text x="280" y="545" font-size="12" fill="#fff" text-anchor="middle">cable to USB-C plug</text>
+
+  <!-- labels under pads -->
+
+  <!-- callouts -->
+  <g font-size="13" fill="#111">
+    <polyline points="264,372 264,392 572,392 572,198 600,198" fill="none" stroke="#d00000" stroke-width="1.5"/>
+    <circle cx="264" cy="372" r="3" fill="#d00000"/>
+    <rect x="600" y="160" width="336" height="76" rx="6" fill="#fff4f4" stroke="#d00000"/>
+    <text x="612" y="182" font-weight="700" fill="#b00000">1. Ground/drain pad left empty</text>
+    <text x="612" y="202">The USB 3 pairs have no shield or ground</text>
+    <text x="612" y="220">return connected at the board.</text>
+
+    <polyline points="250,470 586,470 586,304 600,304" fill="none" stroke="#d00000" stroke-width="1.5"/>
+    <circle cx="250" cy="470" r="3" fill="#d00000"/>
+    <rect x="600" y="256" width="336" height="96" rx="6" fill="#fff4f4" stroke="#d00000"/>
+    <text x="612" y="278" font-weight="700" fill="#b00000">2. USB 3 pairs as loose single wires</text>
+    <text x="612" y="298">5 Gb/s needs twisted/shielded, length-</text>
+    <text x="612" y="316">matched differential pairs. Untwisted ends</text>
+    <text x="612" y="334">and flux residue add reflections and noise.</text>
+
+    <rect x="600" y="372" width="336" height="96" rx="6" fill="#f2fbf4" stroke="#1f7a3d"/>
+    <text x="612" y="394" font-weight="700" fill="#1f7a3d">3. USB 2 wires (other side) are fine</text>
+    <text x="612" y="414">D+/D− at 480 Mb/s tolerate this wiring.</text>
+    <text x="612" y="432">USB 2.0-only mode makes the chip use</text>
+    <text x="612" y="450">only these wires, so the link is reliable.</text>
+  </g>
+
+  <!-- legend -->
+  <g font-size="12" fill="#333">
+    <text x="600" y="500" font-weight="700">CN2 (left to right)</text>
+    <rect x="600" y="510" width="14" height="6" fill="#1e66f5"/><text x="620" y="517">SSRX− (blue)</text>
+    <rect x="720" y="510" width="14" height="6" fill="#f2c200"/><text x="740" y="517">SSRX+ (yellow)</text>
+    <rect x="600" y="530" width="14" height="6" fill="#bbb"/><text x="620" y="537">GND_DRAIN (empty)</text>
+    <rect x="600" y="550" width="14" height="6" fill="#8a3ffc"/><text x="620" y="557">SSTX− (purple)</text>
+    <rect x="720" y="550" width="14" height="6" fill="#ff7f11"/><text x="740" y="557">SSTX+ (orange)</text>
+  </g>
+</svg>

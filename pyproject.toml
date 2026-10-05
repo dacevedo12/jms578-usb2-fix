@@ -1,0 +1,12 @@
+# Tooling config for the research scripts in research/ (the tool itself is Rust).
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+include = ["research/**/*.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.pytest.ini_options]
+testpaths = ["research/tests"]
+pythonpath = ["research"]

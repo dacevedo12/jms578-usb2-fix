@@ -1,0 +1,41 @@
+[package]
+name = "jms578-usb2-fix"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "Fix cheap JMicron JMS578 USB-to-SATA adapters that fail over USB 3 (not recognized on Mac, disconnects, works only through a hub) by safely switching them to USB 2.0-only mode."
+license = "MIT"
+readme = "README.md"
+keywords = ["jms578", "usb-sata", "jmicron", "uasp", "firmware"]
+categories = ["command-line-utilities", "hardware-support"]
+
+[[bin]]
+name = "jms578-usb2-fix"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+humantime = "2"
+libc = "0.2"
+rusb = { version = "0.9", features = ["vendored"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+plist = "1"
+
+[dev-dependencies]
+tempfile = "3"
+
+[lints.rust]
+unsafe_code = "deny"
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+cast_possible_truncation = "allow"
+cast_precision_loss = "allow"
+cast_sign_loss = "allow"

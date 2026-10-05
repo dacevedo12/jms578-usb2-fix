@@ -1,0 +1,8 @@
+/target
+.DS_Store
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+# Never commit flash dumps: they contain proprietary firmware and device serials.
+*.bin
+jms578-backups/
